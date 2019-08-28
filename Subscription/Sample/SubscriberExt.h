@@ -6,9 +6,13 @@
 #define CODETEMPLATES_SUBSCRIBEREXT_H
 
 #include "Handler.h"
+#include "NotifierStaticImpl.h"
 #include "SubscriberImpl.h"
 
-class SubscriberExt : public SubscriberImpl<Handler> {
+class SubscriberExt : public NotifierStaticImpl<Handler, decltype(Handler::notify)&, Handler::notify, int, std::string> {
+private:
+    using BaseClass = NotifierStaticImpl<Handler, decltype(Handler::notify)&, Handler::notify, int, std::string>;
+
 public:
     void process(int index, std::string msg);
 };

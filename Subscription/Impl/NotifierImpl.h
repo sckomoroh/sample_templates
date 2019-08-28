@@ -5,17 +5,23 @@
 #ifndef CODETEMPLATES_NOTIFIERIMPL_H
 #define CODETEMPLATES_NOTIFIERIMPL_H
 
+#include <functional>
+
 #include "INotifier.h"
 #include "SubscriberImpl.h"
 
-template<class TListener, class ...TArgs>
+template<class TThis, class TFunc, TFunc func, class ...TArgs>
 class NotifierImpl
-        : SubscriberImpl<TListener>
-        , public INotifier<TArgs...> {
+        : public SubscriberImpl<TThis>
+        , public INotifier<TThis, TFunc, func, TArgs...> {
+protected:
+    using Notifier_t =  INotifier<TThis, TFunc, func, TArgs...>;
+
 public:
-    void notify(TArgs... args) const override {
-        for (const auto& item : SubscriberImpl<TListener>::mListeners) {
-            item.get().onNotify(args...);
+    void notifyListener(TArgs... args) const override {
+        for (const auto& item : SubscriberImpl<TThis>::mListeners) {
+            TThis* pThis = &(item.get());
+            (pThis->*func)(args...);
         }
     }
 };
