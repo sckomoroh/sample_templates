@@ -11,9 +11,11 @@
 template<class TThis, class TFunc, TFunc func, class ...TArgs>
 class NotifierStaticImpl
     : public SubscriberImpl<TThis>
-    , public INotifier<TThis, TFunc, func, TArgs...> {
-        protected:
-        using Notifier_t =  INotifier<TThis, TFunc, func, TArgs...>;
+    , public INotifier<TArgs...> {
+
+protected:
+    using Notifier_t =  INotifier<TArgs...>;
+
 public:
     void notifyListener(TArgs... args) const override {
         for (const auto& item : SubscriberImpl<TThis>::mListeners) {
@@ -21,8 +23,6 @@ public:
             func(pThis, args...);
         }
     }
-
-
 };
 
 #endif //CODETEMPLATES_NOTIFIERSTATICIMPL_H

@@ -5,11 +5,10 @@
 #ifndef CODETEMPLATES_INOTIFIER_H
 #define CODETEMPLATES_INOTIFIER_H
 
-template<class TThis, class TFunc, TFunc func, class ...TArgs>
+template<class ...TArgs>
 class INotifier {
 public:
     virtual void notifyListener(TArgs... args) const = 0;
 };
-
 
 #endif //CODETEMPLATES_INOTIFIER_H
