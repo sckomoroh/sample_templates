@@ -6,14 +6,14 @@
 #define CODETEMPLATES_MESSAGEQUEUEBASE_H
 
 #include <condition_variable>
-#include <deque>
+#include <queue>
 
 #include "IMessageQueue.h"
 
 template<class TMessage>
 class MessageQueueBase : public IMessageQueue<TMessage>{
 private:
-    std::deque<TMessage> mMessages;
+    std::queue<TMessage> mMessages;
     std::condition_variable mWaitVar;
 
 public:
@@ -28,8 +28,8 @@ public:
         std::unique_lock<std::mutex> locker(mutex);
 
         mWaitVar.wait(locker, [this](){ return mMessages.size() > 0; });
-        auto message = mMessages.at(0);
-        mMessages.pop_front();
+        auto message = mMessages.front();
+        mMessages.pop();
 
         return message;
     }
