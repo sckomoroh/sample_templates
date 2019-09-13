@@ -10,22 +10,19 @@
 #include "INotifier.h"
 #include "SubscriberImpl.h"
 
-template<class TThis, class TFunc, TFunc func, class ...TArgs>
-class NotifierImpl
-        : public SubscriberImpl<TThis>
-        , public INotifier<TArgs...> {
+template<class TFunc, TFunc func>
+class NotifierImpl;
 
-protected:
-    using Notifier_t =  INotifier<TArgs...>;
-
+template<class TClass, class ...TArgs, void(TClass::*func)(TArgs...)>
+class NotifierImpl<void(TClass::*)(TArgs...), func>
+    : public INotifier<TArgs...>
+    , public SubscriberImpl<TClass> {
 public:
-    void notifyListener(TArgs... args) const override {
-        for (const auto& item : SubscriberImpl<TThis>::mListeners) {
-            TThis* pThis = &(item.get());
-            (pThis->*func)(args...);
-        }
+    void notifyListener(TArgs... args) override {
+        SubscriberImpl<TClass>::foreachListener([&args...](TClass& item) {
+            (item.*func)(args...);
+        });
     }
 };
-
 
 #endif //CODETEMPLATES_NOTIFIERIMPL_H

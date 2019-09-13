@@ -8,7 +8,7 @@
 template<class ...TArgs>
 class INotifier {
 public:
-    virtual void notifyListener(TArgs... args) const = 0;
+    virtual void notifyListener(TArgs... args) = 0;
 };
 
 #endif //CODETEMPLATES_INOTIFIER_H

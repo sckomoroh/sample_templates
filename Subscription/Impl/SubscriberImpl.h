@@ -13,7 +13,7 @@
 
 template<class TListener>
 class SubscriberImpl : public ISubscriber<TListener> {
-protected:
+private:
     std::list<std::reference_wrapper<TListener>> mListeners;
 
 public:
@@ -38,6 +38,13 @@ public:
                 });
         if (iter != mListeners.end()) {
             mListeners.erase(iter);
+        }
+    }
+
+protected:
+    void foreachListener(std::function<void(TListener&)> itemFunc) {
+        for (const auto& item : mListeners) {
+            itemFunc(item.get());
         }
     }
 };
