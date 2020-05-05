@@ -5,18 +5,15 @@
 #ifndef CODETEMPLATES_ISTATE_H
 #define CODETEMPLATES_ISTATE_H
 
-#include "EStateId.h"
+#include "IStateChangeHandler.h"
+#include "ISubscriber.h"
 
+template <class TStateId, class... TArgs>
 class IState {
 public:
-    virtual void complete() = 0;
+    virtual TStateId process(TArgs... args) = 0;
 
-    virtual int getValue() const = 0;
-
-    virtual void update(int value) const = 0;
-
-    virtual EStateId getStateId() const = 0;
+    virtual TStateId getStateId() const = 0;
 };
 
-
-#endif //CODETEMPLATES_ISTATE_H
+#endif  // CODETEMPLATES_ISTATE_H

@@ -6,39 +6,43 @@
 #define CODETEMPLATES_STATEMACHINE_H
 
 #include <functional>
-#include <map>
 #include <memory>
+#include <mutex>
 
 #include "IActionListener.h"
-#include "IStateListener.h"
+#include "IEventListener.h"
 
+#include "EStateId.h"
 #include "IState.h"
 #include "IStateFactory.h"
 
+#include "Impl/NotifierImpl.h"
+
 class StateMachine
-        : public IStateListener
-        , public IActionListener {
+    : public IEventListener
+    , public IActionListener
+    , public NotifierImpl<decltype(&IStateChangeHandler<EStateId>::onStateChanged),
+                          &IStateChangeHandler<EStateId>::onStateChanged> {
 private:
-    IStateFactory& mStateFactory;
-    std::shared_ptr<IState> mCurrentState;
-    std::map<EStateId, std::function<EStateId(int)>> mTransitions;
+    IStateFactory<EStateId, EEventID, bool>& mStateFactory;
+    std::shared_ptr<IState<EStateId, EEventID, bool>> mCurrentState;
+    EEventID mEventId;
+    bool mIsActive;
+    std::mutex mIncomingValuesMutex;
 
 public:
-    StateMachine(IStateFactory& stateFactory, EStateId initState, int initValue);
+    StateMachine(IStateFactory<EStateId, EEventID, bool>& stateFactory,
+                 EEventID eventId,
+                 bool isActive);
 
-    void onAction() override;
+public:  // IActionListener
+    void onAction(bool isActive) override;
 
-    void onStateChanged(int value) override;
+public:  // IEventListener
+    void onEvent(EEventID eventId) override;
 
 private:
-    void initializeTransitions();
-
-    static EStateId state1Transition(int value);
-
-    static EStateId state2Transition(int value);
-
-    static EStateId state3Transition(int value);
+    void processIncomingValues();
 };
 
-
-#endif //CODETEMPLATES_STATEMACHINE_H
+#endif  // CODETEMPLATES_STATEMACHINE_H

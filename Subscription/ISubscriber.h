@@ -7,7 +7,7 @@
 
 #include <functional>
 
-template<class TListener>
+template <class TListener>
 class ISubscriber {
 public:
     virtual void subscribe(std::reference_wrapper<TListener> listener) = 0;
@@ -15,5 +15,4 @@ public:
     virtual void unsubscribe(std::reference_wrapper<TListener> listener) = 0;
 };
 
-
-#endif //CODETEMPLATES_ISUBSCRIBER_H
+#endif  // CODETEMPLATES_ISUBSCRIBER_H

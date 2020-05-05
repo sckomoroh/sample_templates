@@ -5,11 +5,9 @@
 #ifndef CODETEMPLATES_IACTIONLISTENER_H
 #define CODETEMPLATES_IACTIONLISTENER_H
 
-
 class IActionListener {
 public:
-    virtual void onAction() = 0;
+    virtual void onAction(bool isActive) = 0;
 };
 
-
-#endif //CODETEMPLATES_IACTIONLISTENER_H
+#endif  // CODETEMPLATES_IACTIONLISTENER_H

@@ -4,66 +4,44 @@
 
 #include "StateMachine.h"
 
-StateMachine::StateMachine(IStateFactory &stateFactory, EStateId initState, int initValue)
-    : mStateFactory(stateFactory) {
+StateMachine::StateMachine(IStateFactory<EStateId, EEventID, bool>& stateFactory,
+                           EEventID eventId,
+                           bool isActive)
+    : mStateFactory{stateFactory}
+    , mCurrentState{nullptr}
+{
+}
 
-    mCurrentState = mStateFactory.createState(initState);
+void StateMachine::onAction(bool isActive)
+{
+    std::lock_guard<std::mutex> lock{mIncomingValuesMutex};
+
+    mIsActive = isActive;
+    processIncomingValues();
+}
+
+void StateMachine::onEvent(EEventID eventId)
+{
+    std::lock_guard<std::mutex> lock{mIncomingValuesMutex};
+
+    mEventId = eventId;
+    processIncomingValues();
+}
+
+void StateMachine::processIncomingValues()
+{
     if (mCurrentState) {
-        mCurrentState->update(initValue);
+        auto nextStateId = mCurrentState->process(mEventId, mIsActive);
+        if (nextStateId != mCurrentState->getStateId() && nextStateId != EStateId::Undefined) {
+            auto nextState = mStateFactory.createState(nextStateId);
+            if (nextState) {
+                mCurrentState = nextState;
+                notifyListener(nextStateId);
+            }
+        }
     }
-
-    initializeTransitions();
-}
-
-void StateMachine::onAction() {
-    do {
-        if (!mCurrentState) {
-            break;
-        }
-
-        auto iter = mTransitions.find(mCurrentState->getStateId());
-        if (iter == mTransitions.end()) {
-            break;
-        }
-
-        auto nextStateId = iter->second(mCurrentState->getValue());
-        if (nextStateId == EStateId::Undefined) {
-            break;
-        }
-
-        auto nextState = mStateFactory.createState(nextStateId);
-        if (!nextState) {
-            break;
-        }
-
-        nextState->update(mCurrentState->getValue());
-
-        mCurrentState = nextState;
-    } while (false);
-}
-
-void StateMachine::onStateChanged(int value) {
-    if (mCurrentState) {
-        mCurrentState->update(value);
+    else if (mIsActive && mEventId == EEventID::Initializing) {
+        mCurrentState = mStateFactory.createState(EStateId::Initialization);
+        notifyListener(EStateId::Initialization);
     }
-}
-
-void StateMachine::initializeTransitions() {
-    mTransitions = {
-            {EStateId::State1, &StateMachine::state1Transition },
-            {EStateId::State2, &StateMachine::state2Transition },
-            {EStateId::State3, &StateMachine::state3Transition },
-    };
-}
-
-EStateId StateMachine::state1Transition(int value) {
-    return value > 0 ? EStateId::State2 : EStateId::State3;
-}
-
-EStateId StateMachine::state2Transition(int value) {
-    return value > 0 ? EStateId::State3 : EStateId::State1;
-}
-
-EStateId StateMachine::state3Transition(int value) {
-    return value > 0 ? EStateId::State1 : EStateId::State2;
 }

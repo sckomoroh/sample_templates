@@ -10,10 +10,11 @@
 #include "EStateId.h"
 #include "IState.h"
 
+template <class TStateId, class TAction, class... TArgs>
 class IStateFactory {
 public:
-    virtual std::shared_ptr<IState> createState(EStateId stateId) const = 0;
+    virtual std::shared_ptr<IState<TStateId, TAction, TArgs...>> createState(
+        EStateId stateId) const = 0;
 };
 
-
-#endif //CODETEMPLATES_ISTATEFACTORY_H
+#endif  // CODETEMPLATES_ISTATEFACTORY_H
