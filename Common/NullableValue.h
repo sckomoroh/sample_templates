@@ -30,14 +30,7 @@ public:
 
     bool getValue(TValue& value) const
     {
-        auto res = false;
-
-        if (_value) {
-            value = *_value;
-            res = true;
-        }
-
-        return res;
+        return _value == nullptr ? false : (value = *_value, true);
     }
 };
 
