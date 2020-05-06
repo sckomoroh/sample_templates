@@ -5,6 +5,6 @@
 #ifndef CODETEMPLATES_ESTATEID_H
 #define CODETEMPLATES_ESTATEID_H
 
-enum class EStateId { Undefined, Initialization, Opened, Closed, ShutDown };
+enum class EStateId { Undefined, Initialization, Opened, Closed, ShutDown, Initial };
 
 #endif  // CODETEMPLATES_ESTATEID_H

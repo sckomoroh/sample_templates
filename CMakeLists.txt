@@ -9,6 +9,8 @@ include_directories(
     FSM/Impl
     FSM/external
     Subscription
+    Subscription/Impl
+    Common
 )
 
 add_executable(
@@ -24,6 +26,12 @@ add_executable(
     FSM/tests/OpenStateTests.cpp
     FSM/tests/InitializationStateTests.cpp
     FSM/tests/ShutdownStateTests.cpp
+    FSM/tests/StateMachineTests.cpp
+
+    FSM/external/Controller.cpp
+    FSM/Impl/InitialState.cpp
+
+    FSM/IStateChangeHandler.h
 )
 
 target_link_libraries(

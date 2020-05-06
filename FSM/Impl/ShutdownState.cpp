@@ -2,8 +2,8 @@
 
 EStateId ShutdownState::process(EEventID eventId, bool isActive)
 {
-    printf("[ShutdownState::process] Process. Event ID: %d, Is active = %s\n", eventId,
-           isActive ? "true" : "false");
+    printf("[ShutdownState::process] Process. Event ID: %d, Is active = %s\n", (int)eventId,
+           (isActive ? "true" : "false"));
 
     auto nextState = getStateId();
 
@@ -14,7 +14,7 @@ EStateId ShutdownState::process(EEventID eventId, bool isActive)
         }
 
         if (eventId != EEventID::Initializing) {
-            printf("[ShutdownState::process] Event not supported %d", eventId);
+            printf("[ShutdownState::process] Event not supported %d", (int)eventId);
             break;
         }
 

@@ -11,7 +11,7 @@ OpenedState::OpenedState(IDevice& device)
 
 EStateId OpenedState::process(EEventID eventId, bool isActive)
 {
-    printf("[OpenedState::process] Process. Event ID: %d, Is active = %s\n", eventId,
+    printf("[OpenedState::process] Process. Event ID: %d, Is active = %s\n", (int)eventId,
            isActive ? "true" : "false");
 
     EStateId nextStateId = getStateId();
@@ -19,7 +19,7 @@ EStateId OpenedState::process(EEventID eventId, bool isActive)
     if (isActive) {
         do {
             if (eventId != EEventID::Close) {
-                printf("[OpenedState::process] Transition to %d not supported\n", eventId);
+                printf("[OpenedState::process] Transition to %d not supported\n", (int)eventId);
                 break;
             }
             if (!close()) {

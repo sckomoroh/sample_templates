@@ -11,15 +11,16 @@ InitializationState::InitializationState(IDevice& device)
 
 EStateId InitializationState::process(EEventID eventId, bool isActive)
 {
-    printf("[InitializationState::process] Process. Event ID: %d, Is active = %s\n", eventId,
-           isActive ? "true" : "false");
+    printf("[InitializationState::process] Process. Event ID: %d, Is active = %s\n", (int)eventId,
+           (isActive ? "true" : "false"));
 
     EStateId nextStateId = getStateId();
 
     if (isActive) {
         do {
             if (eventId != EEventID::Open) {
-                printf("[InitializationState::process] Transition to %d not supported\n", eventId);
+                printf("[InitializationState::process] Transition to %d not supported\n",
+                       (int)eventId);
                 break;
             }
 
@@ -43,11 +44,7 @@ EStateId InitializationState::process(EEventID eventId, bool isActive)
     return nextStateId;
 }
 
-EStateId InitializationState::getStateId() const
-{
-    printf("[%s] Open\n", __FUNCTION__);
-    return EStateId::Initialization;
-}
+EStateId InitializationState::getStateId() const { return EStateId::Initialization; }
 
 bool InitializationState::open()
 {

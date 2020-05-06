@@ -16,6 +16,8 @@
 #include "IState.h"
 #include "IStateFactory.h"
 
+#include "NullableValue.h"
+
 #include "Impl/NotifierImpl.h"
 
 class StateMachine
@@ -26,14 +28,12 @@ class StateMachine
 private:
     IStateFactory<EStateId, EEventID, bool>& mStateFactory;
     std::shared_ptr<IState<EStateId, EEventID, bool>> mCurrentState;
-    EEventID mEventId;
-    bool mIsActive;
+    NullableValue<EEventID> mEventId;
+    NullableValue<bool> mIsActive;
     std::mutex mIncomingValuesMutex;
 
 public:
-    StateMachine(IStateFactory<EStateId, EEventID, bool>& stateFactory,
-                 EEventID eventId,
-                 bool isActive);
+    StateMachine(IStateFactory<EStateId, EEventID, bool>& stateFactory);
 
 public:  // IActionListener
     void onAction(bool isActive) override;

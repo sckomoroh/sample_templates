@@ -1,0 +1,18 @@
+@startuml
+
+left to right direction
+
+InitializeState -> OpenedState 
+InitializeState -left-> ShutdownState
+
+OpenedState -left-> ShutdownState 
+OpenedState -right-> ClosedState 
+
+ClosedState -left-> ShutdownState
+ClosedState -left-> OpenedState 
+
+ShutdownState -right-> InitializeState 
+
+[*] -> InitializeState
+
+@enduml

@@ -9,8 +9,10 @@
 #include "EStateId.h"
 #include "IDevice.h"
 #include "IStateFactory.h"
+#include "InitialState.h"
 #include "InitializationState.h"
 #include "OpenedState.h"
+#include "ShutdownState.h"
 
 class StateFactory : public IStateFactory<EStateId, EEventID, bool> {
 private:
@@ -26,11 +28,15 @@ public:
     {
         switch (stateId) {
         case EStateId::Initialization:
-            return InitializationState::create<InitializationState>(mDevice);
+            return StateBase::create<InitializationState, IDevice&>(mDevice);
         case EStateId::Opened:
-            return OpenedState::create<OpenedState>(mDevice);
+            return StateBase::create<OpenedState, IDevice&>(mDevice);
         case EStateId::Closed:
-            return ClosedState::create<ClosedState>(mDevice);
+            return StateBase::create<ClosedState, IDevice&>(mDevice);
+        case EStateId::ShutDown:
+            return StateBase::create<ShutdownState, IDevice&>(mDevice);
+        case EStateId::Initial:
+            return StateBase::create<InitialState, IDevice&>(mDevice);
         }
 
         return nullptr;
