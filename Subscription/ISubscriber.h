@@ -7,6 +7,9 @@
 
 #include <functional>
 
+namespace com {
+namespace subscription {
+
 template <class TListener>
 class ISubscriber {
 public:
@@ -14,5 +17,8 @@ public:
 
     virtual void unsubscribe(std::reference_wrapper<TListener> listener) = 0;
 };
+
+}  // namespace subscription
+}  // namespace com
 
 #endif  // CODETEMPLATES_ISUBSCRIBER_H

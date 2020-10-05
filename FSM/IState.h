@@ -6,7 +6,10 @@
 #define CODETEMPLATES_ISTATE_H
 
 #include "IStateChangeHandler.h"
-#include "ISubscriber.h"
+#include "Subscription/ISubscriber.h"
+
+namespace com {
+namespace fsm {
 
 template <class TStateId, class... TArgs>
 class IState {
@@ -15,5 +18,8 @@ public:
 
     virtual TStateId getStateId() const = 0;
 };
+
+}  // namespace fsm
+}  // namespace com
 
 #endif  // CODETEMPLATES_ISTATE_H

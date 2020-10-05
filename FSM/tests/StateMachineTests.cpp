@@ -1,12 +1,17 @@
 #include <gtest/gtest.h>
 
-#include "Controller.h"
+#include "FSM/Impl/StateFactory.h"
+#include "FSM/Impl/StateMachine.h"
+#include "FSM/external/Controller.h"
 #include "IDeviceMock.h"
 #include "IStateChangeHandlerMock.h"
-#include "StateFactory.h"
-#include "StateMachine.h"
 
 using ::testing::StrictMock;
+
+using com::fsm::ActionNotifier;
+using com::fsm::Controller;
+using com::fsm::EventNotifier;
+using com::fsm::StateMachine;
 
 class StateMachineTests : public ::testing::Test {
 protected:

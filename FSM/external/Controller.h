@@ -3,7 +3,12 @@
 
 #include "IActionListener.h"
 #include "IEventListener.h"
-#include "NotifierImpl.h"
+#include "Subscription/Notifier.h"
+
+namespace com {
+namespace fsm {
+
+using ::com::subscription::Notifier;
 
 DECLARE_NOTIFIER(ActionNotifier, IActionListener::onAction)
 DECLARE_NOTIFIER(EventNotifier, IEventListener::onEvent)
@@ -23,5 +28,8 @@ public:
     void open();
     void close();
 };
+
+}  // namespace fsm
+}  // namespace com
 
 #endif  // _Controller_H_

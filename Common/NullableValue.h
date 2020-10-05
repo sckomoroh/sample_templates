@@ -3,6 +3,9 @@
 
 #include <memory>
 
+namespace com {
+namespace common {
+
 template <class TValue>
 class NullableValue {
 private:
@@ -33,5 +36,8 @@ public:
         return _value == nullptr ? false : (value = *_value, true);
     }
 };
+
+}  // namespace common
+}  // namespace com
 
 #endif  // _NullableValue_H_

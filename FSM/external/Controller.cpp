@@ -1,5 +1,8 @@
 #include "Controller.h"
 
+namespace com {
+namespace fsm {
+
 Controller::Controller()
     : _isOpened{false}
 {
@@ -16,3 +19,6 @@ void Controller::shutDown() { ActionNotifier::notifyListener(false); }
 void Controller::open() { EventNotifier::notifyListener(EEventID::Open); }
 
 void Controller::close() { EventNotifier::notifyListener(EEventID::Close); }
+
+}  // namespace fsm
+}  // namespace com

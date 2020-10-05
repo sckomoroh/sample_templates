@@ -4,6 +4,9 @@
 
 #include "StateMachine.h"
 
+namespace com {
+namespace fsm {
+
 StateMachine::StateMachine(IStateFactory<EStateId, EEventID, bool>& stateFactory)
     : mStateFactory{stateFactory}
     , mCurrentState{mStateFactory.createState(EStateId::Initial)}
@@ -44,3 +47,6 @@ void StateMachine::processIncomingValues()
         }
     }
 }
+
+}  // namespace fsm
+}  // namespace com

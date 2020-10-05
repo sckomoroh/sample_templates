@@ -5,10 +5,16 @@
 #ifndef CODETEMPLATES_INOTIFIER_H
 #define CODETEMPLATES_INOTIFIER_H
 
-template<class ...TArgs>
+namespace com {
+namespace subscription {
+
+template <class... TArgs>
 class INotifier {
 public:
     virtual void notifyListener(TArgs... args) = 0;
 };
 
-#endif //CODETEMPLATES_INOTIFIER_H
+}  // namespace subscription
+}  // namespace com
+
+#endif  // CODETEMPLATES_INOTIFIER_H

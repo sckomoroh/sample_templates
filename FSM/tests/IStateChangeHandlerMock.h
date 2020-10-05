@@ -3,8 +3,10 @@
 
 #include <gmock/gmock.h>
 
-#include "EStateId.h"
-#include "IStateChangeHandler.h"
+#include "FSM/IStateChangeHandler.h"
+#include "FSM/Impl/EStateId.h"
+
+using com::fsm::IStateChangeHandler;
 
 class IStateChangeHandlerMock : public IStateChangeHandler<EStateId> {
 public:

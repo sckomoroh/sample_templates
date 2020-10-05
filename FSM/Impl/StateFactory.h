@@ -7,12 +7,14 @@
 
 #include "ClosedState.h"
 #include "EStateId.h"
-#include "IDevice.h"
-#include "IStateFactory.h"
+#include "FSM/IStateFactory.h"
+#include "FSM/external/IDevice.h"
 #include "InitialState.h"
 #include "InitializationState.h"
 #include "OpenedState.h"
 #include "ShutdownState.h"
+
+using com::fsm::IStateFactory;
 
 class StateFactory : public IStateFactory<EStateId, EEventID, bool> {
 private:

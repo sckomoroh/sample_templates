@@ -1,16 +1,11 @@
-cmake_minimum_required(VERSION 3.10)
+#cmake_minimum_required(VERSION 3.10)
 
 project(Samples)
 
 set(CMAKE_CXX_STANDARD 14)
 
 include_directories(
-    FSM
-    FSM/Impl
-    FSM/external
-    Subscription
-    Subscription/Impl
-    Common
+    ./
 )
 
 add_executable(
@@ -32,6 +27,9 @@ add_executable(
     FSM/Impl/InitialState.cpp
 
     FSM/IStateChangeHandler.h
+
+    Common/tests/NullableValueTests.cpp
+    Dispatcher/tests/DispatcherTests.cpp
 )
 
 target_link_libraries(

@@ -1,7 +1,7 @@
 #include <gtest/gtest.h>
 
+#include "FSM/Impl/InitializationState.h"
 #include "IDeviceMock.h"
-#include "InitializationState.h"
 
 class InitializationStateTests : public ::testing::Test {
 protected:

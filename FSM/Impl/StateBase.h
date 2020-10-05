@@ -3,10 +3,12 @@
 
 #include <memory>
 
-#include "EEventID.h"
 #include "EStateId.h"
-#include "IDevice.h"
-#include "IState.h"
+#include "FSM/IState.h"
+#include "FSM/external/EEventID.h"
+#include "FSM/external/IDevice.h"
+
+using com::fsm::IState;
 
 class StateBase : public IState<EStateId, EEventID, bool> {
 protected:

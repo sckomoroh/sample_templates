@@ -10,30 +10,46 @@
 
 #include "IMessageQueue.h"
 
-template<class TMessage>
-class MessageQueueBase : public IMessageQueue<TMessage>{
+template <class TMessage>
+class MessageQueueBase : public IMessageQueue<TMessage> {
 private:
     std::queue<TMessage> mMessages;
     std::condition_variable mWaitVar;
+    std::mutex mMutex;
+    bool mProcessMsg = true;
 
 public:
-    void pushMessage(TMessage message) override {
-        mMessages.push_back(message);
-
+    virtual ~MessageQueueBase()
+    {
+        mProcessMsg = false;
         mWaitVar.notify_all();
     }
 
-    TMessage popMessage() override {
-        std::mutex mutex;
-        std::unique_lock<std::mutex> locker(mutex);
+    void pushMessage(TMessage message) override
+    {
+        std::unique_lock<std::mutex> locker(mMutex);
 
-        mWaitVar.wait(locker, [this](){ return mMessages.size() > 0; });
-        auto message = mMessages.front();
-        mMessages.pop();
+        mMessages.push(message);
 
-        return message;
+        mWaitVar.notify_one();
     }
+
+    bool popMessage(TMessage& message) override
+    {
+        auto res = false;
+        std::unique_lock<std::mutex> locker(mMutex);
+
+        mWaitVar.wait(locker, [this]() { return !mMessages.empty(); });
+        if (mProcessMsg) {
+            res = true;
+            message = mMessages.front();
+            mMessages.pop();
+        }
+
+        return res;
+    }
+
+    bool isEmpty() const override { return mMessages.empty(); }
 };
 
-
-#endif //CODETEMPLATES_MESSAGEQUEUEBASE_H
+#endif  // CODETEMPLATES_MESSAGEQUEUEBASE_H

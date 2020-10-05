@@ -3,7 +3,7 @@
 
 #include <gmock/gmock.h>
 
-#include "IDevice.h"
+#include "FSM/external/IDevice.h"
 
 class IDeviceMock : public IDevice {
 public:

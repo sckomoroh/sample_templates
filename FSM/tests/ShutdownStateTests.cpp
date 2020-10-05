@@ -1,7 +1,7 @@
 #include <gtest/gtest.h>
 
+#include "FSM/Impl/ShutdownState.h"
 #include "IDeviceMock.h"
-#include "ShutdownState.h"
 
 class ShutdownStateTests : public ::testing::Test {
 protected:

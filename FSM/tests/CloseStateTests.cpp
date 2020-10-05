@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 
-#include "ClosedState.h"
+#include "FSM/Impl/ClosedState.h"
 #include "IDeviceMock.h"
 
 class CloseStateTests : public ::testing::Test {

@@ -1,7 +1,7 @@
 #ifndef _InitialState_H_
 #define _InitialState_H_
 
-#include "IDevice.h"
+#include "FSM/external/IDevice.h"
 #include "StateBase.h"
 
 class InitialState : public StateBase {

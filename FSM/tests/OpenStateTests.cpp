@@ -1,7 +1,7 @@
 #include <gtest/gtest.h>
 
+#include "FSM/Impl/OpenedState.h"
 #include "IDeviceMock.h"
-#include "OpenedState.h"
 
 class OpenedStateTests : public ::testing::Test {
 protected:

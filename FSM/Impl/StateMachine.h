@@ -9,22 +9,29 @@
 #include <memory>
 #include <mutex>
 
-#include "IActionListener.h"
-#include "IEventListener.h"
+#include "FSM/external/IActionListener.h"
+#include "FSM/external/IEventListener.h"
 
 #include "EStateId.h"
-#include "IState.h"
-#include "IStateFactory.h"
+#include "FSM/IState.h"
+#include "FSM/IStateFactory.h"
 
-#include "NullableValue.h"
+#include "Common/NullableValue.h"
 
-#include "Impl/NotifierImpl.h"
+#include "Subscription/Notifier.h"
+
+namespace com {
+namespace fsm {
+
+using com::common::NullableValue;
+using com::subscription::Notifier;
+
+DECLARE_NOTIFIER(StateChangeNotifier, IStateChangeHandler<EStateId>::onStateChanged);
 
 class StateMachine
     : public IEventListener
     , public IActionListener
-    , public NotifierImpl<decltype(&IStateChangeHandler<EStateId>::onStateChanged),
-                          &IStateChangeHandler<EStateId>::onStateChanged> {
+    , public StateChangeNotifier {
 private:
     IStateFactory<EStateId, EEventID, bool>& mStateFactory;
     std::shared_ptr<IState<EStateId, EEventID, bool>> mCurrentState;
@@ -44,5 +51,8 @@ public:  // IEventListener
 private:
     void processIncomingValues();
 };
+
+}  // namespace fsm
+}  // namespace com
 
 #endif  // CODETEMPLATES_STATEMACHINE_H

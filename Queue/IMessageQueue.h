@@ -5,17 +5,16 @@
 #ifndef CODETEMPLATES_IMESSAGEQUEUE_H
 #define CODETEMPLATES_IMESSAGEQUEUE_H
 
-
-template<class TMessage>
+template <class TMessage>
 class IMessageQueue {
 public:
     virtual ~IMessageQueue() = default;
 
-    void pushMessage(TMessage message);
+    virtual void pushMessage(TMessage message) = 0;
 
-    TMessage popMessage();
+    virtual bool popMessage(TMessage& message) = 0;
+
+    virtual bool isEmpty() const = 0;
 };
 
-
-
-#endif //CODETEMPLATES_IMESSAGEQUEUE_H
+#endif  // CODETEMPLATES_IMESSAGEQUEUE_H
