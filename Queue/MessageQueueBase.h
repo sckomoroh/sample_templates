@@ -42,7 +42,7 @@ public:
         auto res = false;
         std::unique_lock<std::mutex> locker(mMutex);
 
-        mWaitVar.wait(locker, [this]() { return !mMessages.empty(); });
+        mWaitVar.wait(locker, [this]() { return !mMessages.empty() || !mProcessMsg; });
         if (mProcessMsg) {
             res = true;
             message = mMessages.front();
