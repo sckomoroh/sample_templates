@@ -5,6 +5,9 @@
 #ifndef CODETEMPLATES_IMESSAGEQUEUE_H
 #define CODETEMPLATES_IMESSAGEQUEUE_H
 
+namespace com {
+namespace queue {
+
 template <class TMessage>
 class IMessageQueue {
 public:
@@ -16,5 +19,8 @@ public:
 
     virtual bool isEmpty() const = 0;
 };
+
+}  // namespace queue
+}  // namespace com
 
 #endif  // CODETEMPLATES_IMESSAGEQUEUE_H

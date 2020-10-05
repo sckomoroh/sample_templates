@@ -5,6 +5,9 @@
 
 #include "IMessageQueue.h"
 
+namespace com {
+namespace queue {
+
 template <class TMsg>
 class IMessageQueueMock : public IMessageQueue<TMsg> {
 public:
@@ -12,5 +15,8 @@ public:
     MOCK_METHOD1_T(popMessage, bool(TMsg&));
     MOCK_CONST_METHOD0_T(isEmpty, bool());
 };
+
+}  // namespace queue
+}  // namespace com
 
 #endif  // com_IMessageQueueMock_H_

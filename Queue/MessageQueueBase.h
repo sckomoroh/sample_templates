@@ -10,6 +10,9 @@
 
 #include "IMessageQueue.h"
 
+namespace com {
+namespace queue {
+
 template <class TMessage>
 class MessageQueueBase : public IMessageQueue<TMessage> {
 private:
@@ -51,5 +54,8 @@ public:
 
     bool isEmpty() const override { return mMessages.empty(); }
 };
+
+}  // namespace queue
+}  // namespace com
 
 #endif  // CODETEMPLATES_MESSAGEQUEUEBASE_H
