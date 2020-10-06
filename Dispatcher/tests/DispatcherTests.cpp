@@ -38,4 +38,9 @@ TEST_F(DispatcherTests, SimpleTest)
 
     dispatcher.subscribe(listener);
     dispatcher.start();
+
+    {
+        using namespace std::chrono_literals;
+        std::this_thread::sleep_for(100ms);
+    }
 }
