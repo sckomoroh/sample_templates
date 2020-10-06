@@ -37,7 +37,7 @@ public:  //  IStartable
         if (!_running) {
             _running = true;
             _needStop = false;
-            _runnable.run(*this, args...);
+            _thread = std::thread([this, args...] { _runnable.run(*this, args...); });
         }
     }
 
