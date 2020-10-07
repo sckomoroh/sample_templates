@@ -5,31 +5,32 @@ project(Samples)
 set(CMAKE_CXX_STANDARD 14)
 
 include_directories(
-    ./
+    ./src
 )
 
 add_executable(
     Samples
 
-    FSM/Impl/StateMachine.cpp
-    FSM/Impl/InitializationState.cpp
-    FSM/Impl/OpenedState.cpp
-    FSM/Impl/ClosedState.cpp
-    FSM/Impl/ShutdownState.cpp
+    src/FSM/Impl/StateMachine.cpp
+    src/FSM/Impl/InitializationState.cpp
+    src/FSM/Impl/OpenedState.cpp
+    src/FSM/Impl/ClosedState.cpp
+    src/FSM/Impl/ShutdownState.cpp
 
-    FSM/tests/CloseStateTests.cpp
-    FSM/tests/OpenStateTests.cpp
-    FSM/tests/InitializationStateTests.cpp
-    FSM/tests/ShutdownStateTests.cpp
-    FSM/tests/StateMachineTests.cpp
+    src/FSM/tests/CloseStateTests.cpp
+    src/FSM/tests/OpenStateTests.cpp
+    src/FSM/tests/InitializationStateTests.cpp
+    src/FSM/tests/ShutdownStateTests.cpp
+    src/FSM/tests/StateMachineTests.cpp
 
-    FSM/external/Controller.cpp
-    FSM/Impl/InitialState.cpp
+    src/FSM/external/Controller.cpp
+    src/FSM/Impl/InitialState.cpp
 
-    FSM/IStateChangeHandler.h
+    src/FSM/IStateChangeHandler.h
 
-    Common/tests/NullableValueTests.cpp
-    Dispatcher/tests/DispatcherTests.cpp
+    src/Common/tests/NullableValueTests.cpp
+    src/Dispatcher/tests/DispatcherTests.cpp
+    src/Dispatcher/tests/DeferredLaunchTests.cpp
 )
 
 target_link_libraries(
